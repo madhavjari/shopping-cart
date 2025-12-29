@@ -1,0 +1,17 @@
+.titleBar {
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  background-color: rgb(62, 62, 189);
+  nav {
+    display: flex;
+    gap: 1rem;
+    a {
+      text-decoration: none;
+      color: white;
+      h2 {
+        font-weight: bold;
+      }
+    }
+  }
+}
