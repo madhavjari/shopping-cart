@@ -23,16 +23,21 @@ function ShopPage() {
   }, []);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>A network error was encountered</p>;
+  return product && <ShopList products={product} />;
+}
+
+function ShopList({ products }) {
   return (
-    product && (
-      <div>
-        {product.map((p) => {
-          <ul>
-            <li>{p.title}</li>
-          </ul>;
-        })}
-      </div>
-    )
+    <div>
+      {products.map((p) => {
+        return (
+          <div>
+            <img src={p.image} alt="" />
+            <p>{p.title}</p>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
