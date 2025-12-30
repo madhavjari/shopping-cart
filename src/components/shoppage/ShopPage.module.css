@@ -1,0 +1,71 @@
+.shopSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.shopArticle {
+  padding: 1rem;
+  width: 15rem;
+  img {
+    height: 14rem;
+    width: 10rem;
+  }
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+      padding: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+      background-color: rgb(56, 21, 250);
+      border-radius: 1rem;
+      button {
+        font-size: large;
+        color: white;
+        cursor: pointer;
+        background-color: inherit;
+        border: none;
+      }
+      div {
+        font-size: large;
+        color: white;
+      }
+    }
+  }
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(249, 249, 249, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  --_c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
+  background:
+    var(--_c) top,
+    var(--_c) left,
+    var(--_c) right,
+    var(--_c) bottom;
+  background-size: 12px 12px;
+  animation: l7 1s infinite;
+}
+@keyframes l7 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}

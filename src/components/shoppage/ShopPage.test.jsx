@@ -6,8 +6,4 @@ describe("shop component", () => {
   beforeEach(() => {
     render(<ShopPage />);
   });
-  it("renders loading", () => {
-    const loading = screen.getByText("Loading...");
-    expect(loading).toBeInTheDocument();
-  });
 });

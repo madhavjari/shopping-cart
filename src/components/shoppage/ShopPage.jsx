@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import styles from "./ShopPage.module.css";
 
 function ShopPage() {
-  const [product, setProduct] = useState(null);
+  const [products, setProducts] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,27 +18,50 @@ function ShopPage() {
         }
         return response.json();
       })
-      .then((response) => setProduct(response))
+      .then((response) => setProducts(response))
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }, []);
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className={styles.loaderContainer}>
+        <div className={styles.loader}></div>
+      </div>
+    );
   if (error) return <p>A network error was encountered</p>;
-  return product && <ShopList products={product} />;
+  return (
+    products && (
+      <section className={styles.shopSection}>
+        {products.map((product) => {
+          return <ShopList key={product.id} product={product} />;
+        })}
+      </section>
+    )
+  );
 }
 
-function ShopList({ products }) {
+function ShopList({ product }) {
+  const [inCart, setInCart] = useState(0);
+  const subtractOneFromCart = () => {
+    inCart === 0 ? setInCart(0) : setInCart(inCart - 1);
+  };
+  const addOneToCart = () => {
+    setInCart(inCart + 1);
+  };
+  const priceInRupees = product.price * 91;
   return (
-    <div>
-      {products.map((p) => {
-        return (
-          <div>
-            <img src={p.image} alt="" />
-            <p>{p.title}</p>
-          </div>
-        );
-      })}
-    </div>
+    <article className={styles.shopArticle}>
+      <img src={product.image} alt="" />
+      <p>{product.title}</p>
+      <div>
+        <p>&#8377;{priceInRupees}</p>
+        <div>
+          <button onClick={subtractOneFromCart}>-</button>
+          <div>{inCart}</div>
+          <button onClick={addOneToCart}>+</button>
+        </div>
+      </div>
+    </article>
   );
 }
 
