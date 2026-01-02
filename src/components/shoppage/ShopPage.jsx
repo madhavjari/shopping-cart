@@ -3,8 +3,9 @@ import styles from "./ShopPage.module.css";
 import { useOutletContext } from "react-router";
 
 function ShopPage() {
-  const { setProductInCart, productInCart } = useOutletContext();
-  const [products, setProducts] = useState(null);
+  const { setProductInCart, productInCart, products, setProducts } =
+    useOutletContext();
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -22,13 +23,11 @@ function ShopPage() {
       })
       .then((response) => {
         setProducts(response);
-        const initialCart = {};
-        response.forEach((p) => (initialCart[p.id] = 0));
-        setProductInCart(initialCart);
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }, []);
+
   if (loading)
     return (
       <div className={styles.loaderContainer}>
@@ -36,7 +35,6 @@ function ShopPage() {
       </div>
     );
   if (error) return <p>A network error was encountered</p>;
-  console.log(productInCart);
   return (
     products && (
       <section className={styles.shopSection}>
@@ -46,7 +44,7 @@ function ShopPage() {
               key={product.id}
               product={product}
               setProductInCart={setProductInCart}
-              quantity={productInCart[product.id] || 0}
+              quantity={productInCart.quantity || 0}
             />
           );
         })}
@@ -57,10 +55,15 @@ function ShopPage() {
 
 function ShopList({ product, setProductInCart, quantity }) {
   const updateCart = (amount) => {
-    setProductInCart((prev) => ({
+    setProductInCart((prev) => [
       ...prev,
-      [product.id]: Math.max(0, (prev[product.id] || 0) + amount),
-    }));
+      {
+        id: product.id,
+        quantity: Math.max(0, (quantity || 0) + amount),
+        title: product.title,
+        image: product.image,
+      },
+    ]);
   };
 
   const priceInRupees = Math.floor(product.price * 91, 0);

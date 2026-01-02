@@ -3,10 +3,20 @@ import styles from "./App.module.css";
 import { Link, Outlet } from "react-router";
 
 function App() {
-  const [productInCart, setProductInCart] = useState([]);
-  const totalItems = Object.values(productInCart).reduce((sum, quantity) => {
-    return sum + quantity;
-  }, 0);
+  const [products, setProducts] = useState([]);
+  const [productInCart, setProductInCart] = useState([
+    {
+      quantity: 0,
+    },
+  ]);
+
+  const totalItems = Object.values(productInCart.quantity).reduce(
+    (sum, quantity) => {
+      return sum + quantity;
+    },
+    0
+  );
+
   return (
     <div>
       <div className={styles.titleBar}>
@@ -21,11 +31,13 @@ function App() {
             <h2>Shop</h2>
           </Link>
           <Link to="cart">
-            <h2>Cart {totalItems}</h2>
+            <h2>Cart {totalItems === 0 ? null : totalItems}</h2>
           </Link>
         </nav>
       </div>
-      <Outlet context={{ setProductInCart, productInCart }} />
+      <Outlet
+        context={{ setProductInCart, productInCart, products, setProducts }}
+      />
     </div>
   );
 }
