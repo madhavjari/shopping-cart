@@ -1,10 +1,21 @@
 import { useOutletContext } from "react-router";
+import styles from "./CartPage.module.css";
 
 function CartPage() {
   const { setProductInCart, productInCart, products, setProducts } =
     useOutletContext();
-  console.log(products.length);
-  console.log(Object.keys(productInCart));
+  const updateCart = (amount, id) => {
+    setProductInCart((prevCart) => {
+      const idCheck = prevCart.find((item) => item.id === id);
+      if (idCheck) {
+        return prevCart.map((item) =>
+          item.id === id
+            ? { ...item, quantity: Math.max(0, (item.quantity || 0) + amount) }
+            : item
+        );
+      }
+    });
+  };
   return (
     <>
       <h1>My cart</h1>
@@ -13,7 +24,20 @@ function CartPage() {
         Join us Now. <a href="/">Click here.</a>
       </h3>
       <h2>Bag</h2>
-      <h3>{}</h3>
+      {productInCart.map((product) => {
+        return (
+          <div className={styles.cartContainer}>
+            <img src={product.image} alt="" />
+            <h3>{product.title}</h3>
+            <div>
+              <button onClick={() => updateCart(-1, product.id)}>-</button>
+              <div>{product.quantity || 0}</div>
+              <button onClick={() => updateCart(1, product.id)}>+</button>
+            </div>
+            <h3>{product.price}</h3>
+          </div>
+        );
+      })}
     </>
   );
 }

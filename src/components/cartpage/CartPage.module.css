@@ -1,0 +1,15 @@
+.cartContainer {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 3rem;
+  img {
+    height: 6rem;
+  }
+  div {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+  }
+}

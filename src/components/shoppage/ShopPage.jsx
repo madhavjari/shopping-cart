@@ -35,6 +35,11 @@ function ShopPage() {
       </div>
     );
   if (error) return <p>A network error was encountered</p>;
+  // setProductInCart((prevCart) => {
+  //   return prevCart.filter((item) => {
+  //     item.quantity !== 0;
+  //   });
+  // });
   return (
     products && (
       <section className={styles.shopSection}>
@@ -59,6 +64,7 @@ function ShopList({ product, setProductInCart, productInCart }) {
   const updateCart = (amount) => {
     setProductInCart((prevCart) => {
       const idCheck = prevCart.find((item) => item.id === product.id);
+
       if (idCheck) {
         return prevCart.map((item) =>
           item.id === product.id
@@ -66,6 +72,7 @@ function ShopList({ product, setProductInCart, productInCart }) {
             : item
         );
       }
+
       return [
         ...prevCart,
         {
@@ -73,6 +80,7 @@ function ShopList({ product, setProductInCart, productInCart }) {
           quantity: Math.max(0, (quantity || 0) + amount),
           title: product.title,
           image: product.image,
+          price: Math.floor(product.price * 91, 0),
         },
       ];
     });
