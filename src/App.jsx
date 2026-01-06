@@ -6,14 +6,9 @@ function App() {
   const [products, setProducts] = useState([]);
   const [productInCart, setProductInCart] = useState([]);
 
-  const totalItems = 0;
-
-  // const totalItems = Object.values(productInCart.quantity).reduce(
-  //   (sum, quantity) => {
-  //     return sum + quantity;
-  //   },
-  //   0
-  // );
+  const totalItems = productInCart.reduce((sum, item) => {
+    return sum + item.quantity;
+  }, 0);
 
   return (
     <div>

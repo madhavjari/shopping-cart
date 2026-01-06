@@ -35,7 +35,6 @@ function ShopPage() {
       </div>
     );
   if (error) return <p>A network error was encountered</p>;
-  console.table(productInCart);
   return (
     products && (
       <section className={styles.shopSection}>
@@ -58,7 +57,6 @@ function ShopList({ product, setProductInCart, productInCart }) {
   const idFind = productInCart.find((item) => item.id === product.id);
   const quantity = idFind ? idFind.quantity : 0;
   const updateCart = (amount) => {
-    console.log(product);
     setProductInCart((prevCart) => {
       const idCheck = prevCart.find((item) => item.id === product.id);
       if (idCheck) {
