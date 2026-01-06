@@ -35,6 +35,7 @@ function ShopPage() {
       </div>
     );
   if (error) return <p>A network error was encountered</p>;
+  console.table(productInCart);
   return (
     products && (
       <section className={styles.shopSection}>
@@ -44,7 +45,7 @@ function ShopPage() {
               key={product.id}
               product={product}
               setProductInCart={setProductInCart}
-              quantity={productInCart.quantity || 0}
+              productInCart={productInCart}
             />
           );
         })}
@@ -53,17 +54,30 @@ function ShopPage() {
   );
 }
 
-function ShopList({ product, setProductInCart, quantity }) {
+function ShopList({ product, setProductInCart, productInCart }) {
+  const idFind = productInCart.find((item) => item.id === product.id);
+  const quantity = idFind ? idFind.quantity : 0;
   const updateCart = (amount) => {
-    setProductInCart((prev) => [
-      ...prev,
-      {
-        id: product.id,
-        quantity: Math.max(0, (quantity || 0) + amount),
-        title: product.title,
-        image: product.image,
-      },
-    ]);
+    console.log(product);
+    setProductInCart((prevCart) => {
+      const idCheck = prevCart.find((item) => item.id === product.id);
+      if (idCheck) {
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: Math.max(0, (item.quantity || 0) + amount) }
+            : item
+        );
+      }
+      return [
+        ...prevCart,
+        {
+          id: product.id,
+          quantity: Math.max(0, (quantity || 0) + amount),
+          title: product.title,
+          image: product.image,
+        },
+      ];
+    });
   };
 
   const priceInRupees = Math.floor(product.price * 91, 0);
@@ -75,7 +89,7 @@ function ShopList({ product, setProductInCart, quantity }) {
         <p>&#8377;{priceInRupees}</p>
         <div>
           <button onClick={() => updateCart(-1)}>-</button>
-          <div>{quantity}</div>
+          <div>{quantity || 0}</div>
           <button onClick={() => updateCart(1)}>+</button>
         </div>
       </div>

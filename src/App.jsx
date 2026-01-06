@@ -4,18 +4,16 @@ import { Link, Outlet } from "react-router";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [productInCart, setProductInCart] = useState([
-    {
-      quantity: 0,
-    },
-  ]);
+  const [productInCart, setProductInCart] = useState([]);
 
-  const totalItems = Object.values(productInCart.quantity).reduce(
-    (sum, quantity) => {
-      return sum + quantity;
-    },
-    0
-  );
+  const totalItems = 0;
+
+  // const totalItems = Object.values(productInCart.quantity).reduce(
+  //   (sum, quantity) => {
+  //     return sum + quantity;
+  //   },
+  //   0
+  // );
 
   return (
     <div>
