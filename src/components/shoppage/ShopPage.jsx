@@ -35,11 +35,6 @@ function ShopPage() {
       </div>
     );
   if (error) return <p>A network error was encountered</p>;
-  // setProductInCart((prevCart) => {
-  //   return prevCart.filter((item) => {
-  //     item.quantity !== 0;
-  //   });
-  // });
   return (
     products && (
       <section className={styles.shopSection}>
@@ -62,19 +57,19 @@ function ShopList({ product, setProductInCart, productInCart }) {
   const idFind = productInCart.find((item) => item.id === product.id);
   const quantity = idFind ? idFind.quantity : 0;
   const updateCart = (amount) => {
-    setProductInCart((prevCart) => {
-      const idCheck = prevCart.find((item) => item.id === product.id);
-
-      if (idCheck) {
-        return prevCart.map((item) =>
+    const idCheck = productInCart.find((item) => item.id === product.id);
+    let updatedCart;
+    if (idCheck) {
+      updatedCart = productInCart
+        .map((item) =>
           item.id === product.id
             ? { ...item, quantity: Math.max(0, (item.quantity || 0) + amount) }
             : item
-        );
-      }
-
-      return [
-        ...prevCart,
+        )
+        .filter((item) => item.quantity !== 0);
+    } else {
+      updatedCart = [
+        ...productInCart,
         {
           id: product.id,
           quantity: Math.max(0, (quantity || 0) + amount),
@@ -83,7 +78,8 @@ function ShopList({ product, setProductInCart, productInCart }) {
           price: Math.floor(product.price * 91, 0),
         },
       ];
-    });
+    }
+    setProductInCart(updatedCart);
   };
 
   const priceInRupees = Math.floor(product.price * 91, 0);

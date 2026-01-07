@@ -5,16 +5,15 @@ function CartPage() {
   const { setProductInCart, productInCart, products, setProducts } =
     useOutletContext();
   const updateCart = (amount, id) => {
-    setProductInCart((prevCart) => {
-      const idCheck = prevCart.find((item) => item.id === id);
-      if (idCheck) {
-        return prevCart.map((item) =>
-          item.id === id
-            ? { ...item, quantity: Math.max(0, (item.quantity || 0) + amount) }
-            : item
-        );
-      }
-    });
+    let updatedCart;
+    updatedCart = productInCart
+      .map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(0, (item.quantity || 0) + amount) }
+          : item
+      )
+      .filter((item) => item.quantity !== 0);
+    setProductInCart(updatedCart);
   };
   return (
     <>
@@ -34,7 +33,7 @@ function CartPage() {
               <div>{product.quantity || 0}</div>
               <button onClick={() => updateCart(1, product.id)}>+</button>
             </div>
-            <h3>{product.price}</h3>
+            <h3>{product.price * product.quantity}</h3>
           </div>
         );
       })}
