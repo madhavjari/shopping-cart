@@ -24,7 +24,12 @@ function App() {
             <h2>Shop</h2>
           </Link>
           <Link to="cart">
-            <h2>Cart {totalItems === 0 ? null : totalItems}</h2>
+            <h2>Cart</h2>
+            {totalItems > 0 && (
+              <span key={totalItems} className={styles.cartBadge}>
+                {totalItems}
+              </span>
+            )}
           </Link>
         </nav>
       </div>
@@ -37,6 +42,9 @@ function App() {
           totalItems,
         }}
       />
+      <div className={styles.footer}>
+        <h1>Style your way</h1>
+      </div>
     </div>
   );
 }

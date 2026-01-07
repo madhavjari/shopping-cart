@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 function HomePage() {
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <header>
         <h1>Frenzy Cart</h1>
         <h2>Your ultimate stop for clothing needs.</h2>

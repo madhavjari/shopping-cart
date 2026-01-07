@@ -26,7 +26,7 @@ function ShopPage() {
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
-  }, []);
+  }, [setProducts]);
 
   if (loading)
     return (
@@ -85,7 +85,7 @@ function ShopList({ product, setProductInCart, productInCart }) {
   const priceInRupees = Math.floor(product.price * 91, 0);
   return (
     <article className={styles.shopArticle}>
-      <img src={product.image} alt="" />
+      <img src={product.image} alt={product.title} />
       <p>{product.title}</p>
       <div>
         <p>&#8377;{priceInRupees}</p>

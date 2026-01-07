@@ -1,17 +1,132 @@
+:global(:root) {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --accent-color: #f59e0b;
+  --bg-color: #f9fafb;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --white: #ffffff;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --radius: 0.75rem;
+  --transition: all 0.2s ease-in-out;
+}
+
+:global(*) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:global(body) {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
 .titleBar {
   display: flex;
-  color: white;
   justify-content: space-between;
-  background-color: rgb(62, 62, 189);
-  nav {
-    display: flex;
-    gap: 1rem;
-    a {
-      text-decoration: none;
-      color: white;
-      h2 {
-        font-weight: bold;
-      }
-    }
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.titleBar header {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.titleBar header h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--white);
+}
+
+.titleBar nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.titleBar nav a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  transition: var(--transition);
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background-color: #ef4444;
+  color: white;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  min-width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  animation: bounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes bounce {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
   }
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cartLink:hover .cartBadge {
+  transform: translateY(-3px);
+  background-color: #f87171;
+}
+
+.titleBar nav a:hover,
+.titleBar nav a:focus {
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(
+    --text-main
+  ); /* Darker footer looks more professional */
+  color: var(--white);
+  margin-top: auto; /* Pushes footer to bottom if content is short */
 }
