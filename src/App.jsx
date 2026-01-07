@@ -29,7 +29,13 @@ function App() {
         </nav>
       </div>
       <Outlet
-        context={{ setProductInCart, productInCart, products, setProducts }}
+        context={{
+          setProductInCart,
+          productInCart,
+          products,
+          setProducts,
+          totalItems,
+        }}
       />
     </div>
   );
